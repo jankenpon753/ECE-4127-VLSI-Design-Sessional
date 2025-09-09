@@ -6,16 +6,17 @@
 \usepackage[english]{babel}
 \usepackage{titling}
 \usepackage{float}
-% \usepackage{amsmath}
-% \usepackage{minted}
+\usepackage{amsmath}
+\usepackage{minted}
 % \usepackage{multicol}
 % \usepackage{array}
 % \usepackage{setspace}
 % \usepackage{placeins}
+\usepackage{parskip}
 
 % \usepackage{lipsum}
 
-\title{Basics of Oscilloscope and Signal Generator}
+\title{Implementation of CMOS Inverter.}
 \author{}
 \date{}
 
@@ -33,33 +34,65 @@
 
 \section*{Theory}
 \addcontentsline{toc}{section}{Theory}
+A CMOS inverter is a fundamental building block in digital logic, consisting of a PMOS and an NMOS transistor connected in a complementary arrangement~\cite{rabaey2003digital}. The PMOS transistor is linked to the supply voltage (VDD), while the NMOS is connected to ground. Both transistors share the same input signal (Vin), and the output is taken from the junction between them. When the input is low (logic 0), the PMOS conducts and the NMOS is off, resulting in a high output (logic 1). Conversely, when the input is high (logic 1), the NMOS turns on, the PMOS switches off, and the output drops to logic 0. This complementary switching greatly reduces static power consumption, making CMOS technology highly energy efficient~\cite{kang2003cmos}.
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{sigGen2.png}
-%     \caption{Signal Generator}
-%     % \label{fig:Signal Generator}
-% \end{figure}
+An important dynamic property of CMOS inverters is the transition time, which includes rise time (tr) and fall time (tf). These times indicate how quickly the output voltage responds to changes in the input. Rise time refers to the interval during which the output increases from about 10\% to 90\% of VDD, while fall time measures the decrease from 90\% to 10\% of VDD. The speed of these transitions is crucial for high-speed digital circuits~\cite{weste2015cmos}.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{th.png}
+    \caption{Block diagram of a CMOS inverter circuit.\cite{GeeksforGeeks2025Jul}}
+\end{figure}
 
-\section*{Discussion}
-\addcontentsline{toc}{section}{Discussion}
-In this experiment, we worked with two essential tools in electronics laboratories: the oscilloscope and the signal generator. The oscilloscope allows us to visualize electronic signals, while the signal generator produces a variety of signals at adjustable frequencies. Together, these devices play a critical role in testing and analyzing electronic circuits.\\\\
-We gained hands-on experience by using these tools to observe and evaluate signals. Adjustments were made to both devices to see how changes in settings affected the signals. Additionally, we connected the signal generator to the oscilloscope to monitor the generated waveforms directly on the screen.\\\\
-This practical session was highly beneficial, providing us with valuable experience in using these tools effectively. It demonstrated their importance in the field of electronics for testing, troubleshooting, and analyzing circuits.\\\\
-In summary, the oscilloscope and signal generator are indispensable instruments in any electronics laboratory. The oscilloscope offers a detailed representation of signal characteristics, while the signal generator provides controlled test signals. By combining their functionalities, they allow engineers to create, measure, and analyze signals, ensuring that electronic devices and circuits perform as expected.
+The rise and fall times of a CMOS inverter depend on the output load capacitance ($C_{out}$) and the aspect ratios ($W/L$) of the transistors. Because PMOS transistors have lower carrier mobility ($\mu_p$) than NMOS transistors ($\mu_n$), the PMOS is usually made wider—often about twice the width of the NMOS—to equalize the speeds of the rising and falling edges~\cite{rabaey2003digital}. This matching is achieved when:
+\[
+    \frac{W_1}{L_1} \mu_n = \frac{W_2}{L_2} \mu_p
+\]
+where $T_1$ is the NMOS and $T_2$ is the PMOS. This relationship helps ensure that the inverter switches symmetrically.
 
-\section*{Precaution \& Conclusion}
-\addcontentsline{toc}{section}{Precaution}
-To ensure safe and effective use of the equipment, the following precautions were observed during the experiment:
+The propagation delay due to the output capacitance can be approximated by:
+\[
+    t_r \approx 35 \cdot \frac{C_{out}}{W_1/L_1} \ \text{ns}
+\]
+where $C_{out}$ is in picofarads and $W_1/L_1$ is the NMOS aspect ratio. This means that larger output capacitance or smaller transistor sizes result in slower signal transitions~\cite{kang2003cmos}.
+
+\section*{Required Tools}
+\addcontentsline{toc}{section}{Required Tools}
 \begin{itemize}
-    \item Both the oscilloscope and signal generator were powered off when not in use to prevent potential damage.
-    \item Probes and cables were connected or disconnected only when the devices were switched off to maintain safety and avoid electrical faults.
-    \item Settings on the instruments were adjusted carefully to prevent any misconfigurations or damage to the devices.
-    \item Only the provided, calibrated probes and cables were used to ensure accurate measurements.
-    \item After completing the experiment, all equipment was returned to its designated safe storage location.\\\\
+    \item Microwind
+    \item MS Word
+    \item \LaTeX
 \end{itemize}
-This experiment reinforced the critical role of the oscilloscope and signal generator in electronics. It highlighted their complementary functionalities, with the oscilloscope visualizing signal behavior and the signal generator providing precise, controllable inputs for testing. Through this exercise, we developed a deeper understanding of how these tools are used in real-world applications to diagnose, validate, and optimize electronic circuits. Moreover, adhering to proper precautions ensured the longevity of the equipment and the safety of the users, emphasizing the importance of best practices in a laboratory setting.
+
+\section*{Circuit Schematic}
+\addcontentsline{toc}{section}{Circuit Schematic}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{1inv.png}
+        \caption{CMOS Inverter Schematic without Load Capacitor}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{1cap_inv.png}
+        \caption{CMOS Inverter Schematic with Load Capacitor}
+    \end{minipage}
+\end{figure}
+
+\section*{Output}
+\addcontentsline{toc}{section}{Output}
+
+\input{output.tex}
+
+\section*{Discussion and Conclusion}
+\addcontentsline{toc}{section}{Discussion and Conclusion}
+This experiment involved designing and simulating a CMOS inverter in Microwind to analyze its switching behavior with a clocked input cycling between 0 V and 1.2 V. The simulation results verified the inverter’s basic function: the output reliably inverted the input signal. Various waveforms—including voltage versus time, current versus voltage, and frequency versus time—were examined for both unloaded and loaded output conditions.
+
+Adding a load capacitor highlighted the rise and fall times, which stem from the charging and discharging of the output node, consistent with the relation $t_r = 35 \cdot C_{out}$ ns. In the absence of the capacitor, transitions appeared sharp and nearly ideal; with the capacitor, minor delays and current peaks were observed. These effects reflect fundamental CMOS principles, notably the impact of load capacitance and the necessity of balancing transistor dimensions to offset PMOS and NMOS mobility differences. Adjusting the aspect ratios achieved more symmetrical signal edges, enhancing timing characteristics.
+
+In summary, the study confirmed theoretical expectations and practical behavior of CMOS inverters. It demonstrated that dynamic factors—such as output capacitance, transistor sizing, and carrier mobility—significantly influence propagation delay, switching speed, and power consumption. The findings reinforced the importance of careful design choices for efficient and robust VLSI circuits.
 
 \bibliographystyle{IEEEtran}
 \renewcommand{\bibname}{References}
