@@ -1,0 +1,42 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper, total={6.5in, 9.4in}]{geometry}
+\usepackage{graphicx}
+\graphicspath{ {./images/output/} }
+\usepackage{caption}
+\usepackage[english]{babel}
+\usepackage{titling}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{minted}
+\usepackage{multicol}
+\usepackage{array}
+\usepackage{setspace}
+\usepackage{placeins}
+
+\usepackage{parskip}
+
+% \usepackage{lipsum}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+\input{faysal_sir_cover.tex}
+\pagebreak
+
+\begin{center}
+    {\Large\bfseries Table of Contents}\\[1em]
+    \small
+    \begin{tabular}{|>{\centering\arraybackslash}p{0.05\textwidth}|>{\raggedright\arraybackslash}p{0.70\textwidth}|>{\centering\arraybackslash}p{0.18\textwidth}|}
+        \hline
+        \textbf{Exp No.} & \textbf{Experiment Name}                                     & \textbf{Date}     \\ \hline
+        1                & Implementation of CMOS Inverter.                             & July 4, 2025      \\ \hline
+        2                & Implementation of NMOS Ratio-less Inverter.                  & July 4, 2025      \\ \hline
+        3                & Implementation NAND Gate and NOR Gate Using CMOS             & August 8, 2025    \\ \hline
+        4                & Design and Observe the Characteristics Curve of CMOS Circuit & September 9, 2025 \\ \hline
+        5                & Study and Simulation of 1-Bit SRAM Using Microwind           & October 12, 2025  \\ \hline
+        6                & Implementation of Half Adder Circuit Using CMOS in Microwind & October 20, 2025  \\ \hline
+    \end{tabular}
+\end{center}
+
+\end{document}
